@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+
+import rospy
+from beginner_tutorials.srv import MeasureDistance
+
+def measure_distance_client():
+    """
+    Client untuk meminta jarak dari server.
+    """
+    rospy.wait_for_service('measure_distance')
+    try:
+        measure_distance = rospy.ServiceProxy('measure_distance', MeasureDistance)
+        response = measure_distance()
+        return response.processed_distance
+    except rospy.ServiceException as e:
+        rospy.logerr(f"Service call failed: {e}")
+        return -1.0
+
+if __name__ == "__main__":
+    rospy.init_node('distance_client')
+
+    # Meminta data dari server
+    rospy.loginfo("Requesting distance from server...")
+    distance = measure_distance_client()
+
+    if distance != -1.0:
+        rospy.loginfo(f"Measured Distance: {distance} cm")
+    else:
+        rospy.logwarn("Failed to retrieve distance.")
