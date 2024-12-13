@@ -1,0 +1,4 @@
+float32 diameter   # Diameter lingkaran
+---
+float32 area       # Luas tanah (dalam m²)
+float32 incentive  # Total insentif (dalam Rp)
